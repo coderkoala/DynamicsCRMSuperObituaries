@@ -1,0 +1,6 @@
+D:\source\repos\WorkWithAttributes\WorkWithAttributes\obj\Debug\WorkWithAttributes.csprojAssemblyReference.cache
+D:\source\repos\WorkWithAttributes\WorkWithAttributes\obj\Debug\Login-UX\ExampleLoginForm.baml
+D:\source\repos\WorkWithAttributes\WorkWithAttributes\obj\Debug\Login-UX\ExampleLoginForm.g.cs
+D:\source\repos\WorkWithAttributes\WorkWithAttributes\obj\Debug\WorkWithAttributes_MarkupCompile.cache
+D:\source\repos\WorkWithAttributes\WorkWithAttributes\obj\Debug\WorkWithAttributes.g.resources
+D:\source\repos\WorkWithAttributes\WorkWithAttributes\obj\Debug\WorkWithAttributes.csproj.CoreCompileInputs.cache
