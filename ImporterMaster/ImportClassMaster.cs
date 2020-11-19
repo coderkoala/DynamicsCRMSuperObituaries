@@ -54,7 +54,7 @@ namespace PowerApps.ImporterClassMaster
                     RequiredLevel = new AttributeRequiredLevelManagedProperty(AttributeRequiredLevel.None),
                     Description = new Label("MSVProperties CRM - " + DisplayName, 1033),
                     // Set extended properties
-                    MinValue = 0.00,
+                    MinValue = -99999999999.00,
                     Precision = 2,
                     PrecisionSource = 1,
                     ImeMode = ImeMode.Disabled,
@@ -209,8 +209,112 @@ namespace PowerApps.ImporterClassMaster
                 service = SampleHelpers.Connect("Connect");
                 if (service.IsReady)
                 {
-                    #region FieldImprt
-                    #endregion FieldImprt
+                    #region FieldImport
+                    createFieldString("SuperObitID", "Super Obit ID", StringFormat.Text, ref addedAttributes, "singleLine");
+                    createFieldString("SuperObitName", "Super Obit Name", StringFormat.Text, ref addedAttributes, "singleLine");
+                    createFieldString("Email", "Email", StringFormat.Email, ref addedAttributes, "singleLine");
+                    createFieldString("Secondary Email", "Secondary Email", StringFormat.Email, ref addedAttributes, "singleLine");
+                    createFieldString("ZestimateValue", "Zestimate Value", StringFormat.Text, ref addedAttributes, "money");
+                    createFieldDate("DateofDeath", "Date of Death", ref addedAttributes, DateTimeFormat.DateOnly);
+                    createFieldString("RPRValue", "RPR Value", StringFormat.Text, ref addedAttributes, "money");
+                    createFieldDate("DatePosted", "Date Posted", ref addedAttributes, DateTimeFormat.DateOnly);
+                    createFieldBoolean("HasMortgage", "Has Mortgage?", "Yes", "No", ref addedAttributes);
+                    createFieldString("FuneralName", "Funeral Name", StringFormat.Text, ref addedAttributes);
+                    createFieldString("Realtor_com", "Realtor.com Estimate", StringFormat.Text, ref addedAttributes, "money");
+                    createFieldString("FuneralAddress", "Funeral Address", StringFormat.Text, ref addedAttributes);
+                    createFieldString("RealtytracValue", "Realtytrac Value", StringFormat.Text, ref addedAttributes, "money");
+                    createFieldString("FuneralContactNumber", "Funeral Contact Number", StringFormat.Phone, ref addedAttributes, "singleLine");
+                    createFieldString("Summary", "Summary", StringFormat.Text, ref addedAttributes, "multi");
+                    createFieldString("Age", "Age", StringFormat.Text, ref addedAttributes, "singleLine");
+                    createFieldString("TotalLoans", "Total Loans", StringFormat.Text, ref addedAttributes, "money");
+                    createFieldBoolean("Deceased", "Deceased?", "Yes", "No", ref addedAttributes);
+                    createFieldString("DeceasedLastAddress", "Deceased Last Address", StringFormat.Text, ref addedAttributes);
+                    createFieldString("ObitLink", "Obit Link", StringFormat.Url, ref addedAttributes);
+                    createFieldString("DeceasedLastCity", "Deceased Last City", StringFormat.Text, ref addedAttributes);
+                    createFieldString("PlaceofDeath", "Place of Death", StringFormat.Text, ref addedAttributes);
+                    createFieldString("DeceasedLastState", "Deceased Last State", StringFormat.Text, ref addedAttributes);
+                    createFieldDate("DateofBirth", "Date of Birth", ref addedAttributes, DateTimeFormat.DateOnly);
+                    // @todo Category picklist
+                    createFieldString("DeceasedLastZip", "Deceased Last Zip", StringFormat.Text, ref addedAttributes);
+                    createFieldString("DeceasedFirstName", "Deceased First Name", StringFormat.Text, ref addedAttributes);
+                    createFieldString("County", "County", StringFormat.Text, ref addedAttributes);
+                    createFieldString("DeceasedMiddleName", "Deceased Middle Name", StringFormat.Text, ref addedAttributes);
+                    createFieldString("NumberofSon", "Number of Son", StringFormat.Text, ref addedAttributes);
+                    createFieldString("DeceasedLastName", "Deceased Last Name", StringFormat.Text, ref addedAttributes);
+                    createFieldString("NumberofDaughter", "Number of Daughter", StringFormat.Text, ref addedAttributes);
+                    // @todo Sales Stage picklist
+                    // @todo Status picklist
+                    createFieldString("MainContactNumber", "Main Contact Number", StringFormat.Phone, ref addedAttributes);
+                    // @todo Property Status picklist
+                    createFieldString("MainContactPerson", "Main Contact Person", StringFormat.Text, ref addedAttributes);
+                    // @todo Relationship picklist
+                    createFieldString("MainContactAddress", "Main Contact Address", StringFormat.Text, ref addedAttributes);
+                    createFieldString("MainContactCity", "Main Contact City", StringFormat.Text, ref addedAttributes);
+                    createFieldString("MainContactState", "Main Contact State", StringFormat.Text, ref addedAttributes);
+                    createFieldString("MainContactZipcode", "Main Contact Zipcode", StringFormat.Text, ref addedAttributes);
+                    createFieldString("LeadNumber", "Lead Number", StringFormat.Text, ref addedAttributes);
+                    createFieldString("DeceasedFullName", "Deceased Full Name", StringFormat.Text, ref addedAttributes);
+                    // @todo Assigned To
+                    createFieldString("MainContactPhone_1", "Main Contact Phone 1", StringFormat.Phone, ref addedAttributes);
+                    createFieldString("MainContactPhone_2", "Main Contact Phone 2", StringFormat.Phone, ref addedAttributes);
+                    createFieldDate("UploadedDate", "Uploaded Date", ref addedAttributes, DateTimeFormat.DateOnly);
+                    createFieldString("LegalDescription", "Legal Description", StringFormat.Text, ref addedAttributes, "multi");
+                    createFieldString("RPROwnerName", "RPR Owner Name", StringFormat.Text, ref addedAttributes);
+                    createFieldString("LoanToValue", "Loan To Value", StringFormat.Text, ref addedAttributes);
+                    createFieldString("LoanToValue_percent", "Loan To Value(%)", StringFormat.Text, ref addedAttributes);
+                    createFieldString("RPRLoan1Amount", "RPR Loan 1 Amount", StringFormat.Text, ref addedAttributes, "money");
+                    // @todo Need Genealogy Search
+                    createFieldString("Notefortheteam", "Note for the team", StringFormat.Text, ref addedAttributes, "multi");
+                    createFieldString("OutstandingLoan2", "Outstanding Loan 2", StringFormat.Text, ref addedAttributes, "money");
+                    createFieldDate("RecordedLoan1Date", "Recorded Loan 1 Date", ref addedAttributes, DateTimeFormat.DateOnly);
+                    createFieldDate("RecordedLoan2Date", "Recorded Loan 2 Date", ref addedAttributes, DateTimeFormat.DateOnly);
+                    createFieldString("LendersName2", "Lender's Name 2", StringFormat.Text, ref addedAttributes);
+                    createFieldString("OutstandingLoan1", "Outstanding Loan 1", StringFormat.Text, ref addedAttributes, "money");
+                    createFieldString("RPRLoan2Amount", "RPR Loan 2 Amount", StringFormat.Text, ref addedAttributes, "money");
+                    createFieldString("RPRLender2", "RPR Lender 2", StringFormat.Text, ref addedAttributes);
+                    createFieldString("LendersName1", "Lender's Name 1", StringFormat.Text, ref addedAttributes);
+                    createFieldDate("RPRRecordedLoan2Date", "RPR Recorded Loan 2 Date", ref addedAttributes, DateTimeFormat.DateOnly);
+                    createFieldDate("RPRRecordedLoan1Date", "RPR Recorded Loan 1 Date", ref addedAttributes, DateTimeFormat.DateOnly);
+                    createFieldString("RPRLender1", "RPR Lender 1", StringFormat.Text, ref addedAttributes);
+                    createFieldString("RealtytracEstimatedProfit", "Realtytrac Estimated Profit", StringFormat.Text, ref addedAttributes, "money");
+                    createFieldString("RPRLoantoValue_percentage", "RPR Loan to Value (%)", StringFormat.Text, ref addedAttributes);
+                    createFieldString("RPREstimatedProfit", "RPR Estimated Profit", StringFormat.Text, ref addedAttributes, "money");
+                    createFieldString("TotalLoanAmount", "Total Loan Amount", StringFormat.Text, ref addedAttributes, "money");
+                    createFieldString("TotalLoansAmount", "Total Loans Amount", StringFormat.Text, ref addedAttributes, "money");
+                    createFieldString("RealtytracEstimatedProfit", "Realtytrac Estimated Profit", StringFormat.Text, ref addedAttributes, "money");
+                    createFieldString("OutstandingLoan3", "Outstanding Loan 3", StringFormat.Text, ref addedAttributes, "money");
+                    createFieldString("LendersName3", "Lender's Name 3", StringFormat.Text, ref addedAttributes);
+                    createFieldDate("RecordedLoan3Date", "Recorded Loan 3 Date", ref addedAttributes, DateTimeFormat.DateOnly);
+                    // @todo Great Spread?
+                    // @todo Interested?
+                    createFieldDate("DateforGenealogyInfosurplus", "Date Requested for Additional Genealogy Info", ref addedAttributes, DateTimeFormat.DateOnly);
+                    createFieldDate("DateforGenealogyInfo", "Date Requested for Genealogy Info", ref addedAttributes, DateTimeFormat.DateOnly);
+                    // @todo Picklist Researcher
+                    createFieldString("Equity", "Equity", StringFormat.Text, ref addedAttributes, "money");
+                    createFieldString("Equitys", "Equitys", StringFormat.Text, ref addedAttributes, "money");
+                    createFieldDate("GenealogySearchDone", "Genealogy Search Done", ref addedAttributes, DateTimeFormat.DateOnly);
+                    // @todo Additional Genealogy Search Source
+                    // @todo Genealogy Search Sources
+                    createFieldDate("AuctionDate", "Auction Date", ref addedAttributes, DateTimeFormat.DateOnly);
+                    createFieldString("BrokerName", "Broker Name", StringFormat.Text, ref addedAttributes);
+                    createFieldDate("SentReferralsAgreement", "Sent Referrals Agreement", ref addedAttributes, DateTimeFormat.DateOnly);
+                    createFieldDate("AgentFoundDate", "Agent Found Date", ref addedAttributes, DateTimeFormat.DateOnly);
+                    createFieldDate("InitialHOContacted", "Initial HO Contacted", ref addedAttributes, DateTimeFormat.DateOnly);
+                    createFieldDate("ReceivedSignedRefAgreement", "Received Signed Ref Agreement", ref addedAttributes, DateTimeFormat.DateOnly);
+                    createFieldString("ReferralFeeAmount", "Referral Fee Amount", StringFormat.Text, ref addedAttributes, "money");
+                    createFieldString("BrokerCity", "Broker City", StringFormat.Text, ref addedAttributes);
+                    createFieldString("BrokerState", "Broker State", StringFormat.Text, ref addedAttributes);
+                    createFieldString("BrokerCellphone", "Broker Cellphone", StringFormat.Phone, ref addedAttributes);
+                    createFieldString("BrokerZipcode", "Broker Zipcode", StringFormat.Text, ref addedAttributes);
+                    createFieldString("BrokerAddress", "Broker Address", StringFormat.Text, ref addedAttributes);
+                    createFieldString("CallerNotes", "Caller Notes", StringFormat.Text, ref addedAttributes, "multi");
+                    createFieldDate("LastSoldDate", "Last Sold Date", ref addedAttributes, DateTimeFormat.DateOnly);
+                    createFieldString("LastSoldPrice", "Last Sold Price", StringFormat.Text, ref addedAttributes, "money");
+                    createFieldString("NumberofBeds", "Number of Beds", StringFormat.Text, ref addedAttributes);
+                    createFieldString("NumberofBaths", "Number of Baths", StringFormat.Text, ref addedAttributes);
+                    // @todo Next action needed
+
+                    #endregion FieldImport
 
                     List<string> attributesnotAdded = new List<string>();
                     int attributesCount = addedAttributes.Count;

@@ -17,15 +17,15 @@ namespace PowerApps.ImporterClassMaster
             Console.Clear();
         }
 
-        /// <summary>
+  /// <summary>
         ///
         /// </summary>
         /// <param name="SchemaName">Schema Name</param>
         /// <param name="DisplayName">Display Name</param>
-        /// <param name="stringFormat">StringFormat.Url, StringFormat.Phone, StringFormat.Email</param>
+        /// <param name="StringFormat">StringFormat.Url, StringFormat.Phone, StringFormat.Email</param>
         /// <param name="addedAttributes">Pass by reference.</param>
         /// <param name="lines">Pick among theses: 'singleLine', 'money', 'multi'. The option 'multi' is for memo.</param>
-        static void createFieldString(string SchemaName, string DisplayName, StringFormat stringFormat, ref List<AttributeMetadata> addedAttributes, string lines = "singleLine")
+        static void createFieldString(string SchemaName, string DisplayName, StringFormat StringFormat, ref List<AttributeMetadata> addedAttributes, string lines = "singleLine")
         {
 
             if ("singleLine" == lines)
@@ -40,7 +40,7 @@ namespace PowerApps.ImporterClassMaster
                     MaxLength = 255,
                     IsValidForForm = true,
                     IsValidForGrid = true,
-                    Format = stringFormat,
+                    Format = StringFormat,
                 };
                 addedAttributes.Add(EntityAttribute);
             }
@@ -87,45 +87,16 @@ namespace PowerApps.ImporterClassMaster
         /// <summary>
         /// Create Picklist Field
         /// </summary>
-        /// <param name="SchemaName">Schema name of Attribute.</param>
+        /// <param name="SchemaName">Schema name of Attribute, as well as the optionset</param>
         /// <param name="DisplayName">Display name of Attribute.</param>
-        /// <param name="pickListArray">String Array for options set.</param>
+        /// <param name="OptionSetName">Option set to be mapped to(string).</param>
         /// <param name="addedAttributes">Pass by reference, your Entity List.</param>
         /// <param name="multi">Pass "multi" for multiple picklist</param>
-        static void createFieldPicklist(string SchemaName, string DisplayName, string[] pickListArray, ref List<AttributeMetadata> addedAttributes, string multi = "single")
+        static void createFieldPicklist(string SchemaName, string DisplayName, string OptionSetName, ref List<AttributeMetadata> addedAttributes, string multi = "single")
         {
-            // Option attribute meta mapper
-            IList<OptionMetadata> options = new List<OptionMetadata>();
-            foreach (string singleTupleOptionMetadata in pickListArray)
-            {
-                options.Add(new OptionMetadata(new Label(singleTupleOptionMetadata, 1033), null));
-            }
-            OptionSetMetadata optionset = new OptionSetMetadata(new OptionMetadataCollection(options));
-            optionset.IsGlobal = true;
-            optionset.OptionSetType = OptionSetType.Picklist;
-            optionset.DisplayName = new Label(DisplayName + " Global Picklist *", 1033);
-            optionset.Description = new Label("MSVProperties - " + DisplayName + " picklist option set", 1033);
-            optionset.Name = "new_msvproperties_" + SchemaName + "_option_global";
-
-            try
-            {
-                CrmServiceClient service = SampleHelpers.Connect("Connect");
-                CreateOptionSetRequest createOptionSetRequest = new CreateOptionSetRequest
-                {
-                    // Create a global option set (OptionSetMetadata).
-                    OptionSet = optionset
-                };
-                CreateOptionSetResponse optionsResp = (CreateOptionSetResponse)service.Execute(createOptionSetRequest);
-            }
-            catch (Exception ex)
-            {
-                //Supress Error.
-            }
-
-
             if ("multi" == multi)
             {
-                var CreatedMultiSelectPicklistAttributeMetadata = new MultiSelectPicklistAttributeMetadata("new_" + SchemaName)
+                var CreatedMultiSelectPicklistAttributeMetadata = new MultiSelectPicklistAttributeMetadata()
                 {
                     SchemaName = "new_" + SchemaName,
                     LogicalName = "new_" + SchemaName,
@@ -136,8 +107,8 @@ namespace PowerApps.ImporterClassMaster
                     IsValidForGrid = true,
                     OptionSet = new OptionSetMetadata
                     {
-                        IsGlobal = true,
-                        Name = optionset.Name
+                        IsGlobal = false,
+                        Name = OptionSetName
                     }
                 };
 
@@ -146,7 +117,7 @@ namespace PowerApps.ImporterClassMaster
             }
             else
             {
-                var CreatedPicklistAttributeMetadata = new PicklistAttributeMetadata("new_" + SchemaName)
+                var CreatedPicklistAttributeMetadata = new PicklistAttributeMetadata()
                 {
                     SchemaName = "new_" + SchemaName,
                     LogicalName = "new_" + SchemaName,
@@ -157,8 +128,8 @@ namespace PowerApps.ImporterClassMaster
                     IsValidForGrid = true,
                     OptionSet = new OptionSetMetadata
                     {
-                        IsGlobal = true,
-                        Name = optionset.Name
+                        IsGlobal = false,
+                        Name = OptionSetName
                     }
                 };
                 addedAttributes.Add(CreatedPicklistAttributeMetadata);
@@ -175,9 +146,9 @@ namespace PowerApps.ImporterClassMaster
         /// <param name="falseValue">False Value Label</param>
         /// <param name="addedAttributes">Pass by reference (ref addedAttributes)</param>
         /// <returns></returns>
-        static List<AttributeMetadata> createFieldBoolean(string SchemaName, string DisplayName, string trueValue, string falseValue, ref List<AttributeMetadata> addedAttributes)
+        static void createFieldBoolean(string SchemaName, string DisplayName, string trueValue, string falseValue, ref List<AttributeMetadata> addedAttributes)
         {
-            var CreatedBooleanAttributeMetadata = new BooleanAttributeMetadata("new_" + SchemaName)
+            var CreatedBooleanAttributeMetadata = new BooleanAttributeMetadata()
             {
                 SchemaName = "new_" + SchemaName,
                 LogicalName = "new_" + SchemaName,
@@ -192,7 +163,6 @@ namespace PowerApps.ImporterClassMaster
                 ),
             };
             addedAttributes.Add(CreatedBooleanAttributeMetadata);
-            return addedAttributes;
         }
 
 
@@ -206,7 +176,7 @@ namespace PowerApps.ImporterClassMaster
         /// <param name="addedAttributes">Pass by reference(the entity List object)</param>
         /// <param name="format">DateFormat.DateOnly, DateFormat.DateOnly</param>
         /// <returns></returns>
-        static List<AttributeMetadata> createFieldDate(string SchemaName, string DisplayName, ref List<AttributeMetadata> addedAttributes, DateTimeFormat format)
+        static void createFieldDate(string SchemaName, string DisplayName, ref List<AttributeMetadata> addedAttributes, DateTimeFormat format)
         {
             var CreatedDateTimeAttributeMetadata = new DateTimeAttributeMetadata
             {
@@ -223,7 +193,6 @@ namespace PowerApps.ImporterClassMaster
             };
 
             addedAttributes.Add(CreatedDateTimeAttributeMetadata);
-            return addedAttributes;
         }
 
         //[STAThread]
