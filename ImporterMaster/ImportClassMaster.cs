@@ -89,10 +89,9 @@ namespace PowerApps.ImporterClassMaster
         /// </summary>
         /// <param name="SchemaName">Schema name of Attribute, as well as the optionset</param>
         /// <param name="DisplayName">Display name of Attribute.</param>
-        /// <param name="OptionSetName">Option set to be mapped to(string).</param>
         /// <param name="addedAttributes">Pass by reference, your Entity List.</param>
         /// <param name="multi">Pass "multi" for multiple picklist</param>
-        static void createFieldPicklist(string SchemaName, string DisplayName, string OptionSetName, ref List<AttributeMetadata> addedAttributes, string multi = "single")
+        static void createFieldPicklist(string SchemaName, string DisplayName, ref List<AttributeMetadata> addedAttributes, string multi = "single")
         {
             if ("multi" == multi)
             {
@@ -107,8 +106,12 @@ namespace PowerApps.ImporterClassMaster
                     IsValidForGrid = true,
                     OptionSet = new OptionSetMetadata
                     {
-                        IsGlobal = true,
-                        Name = OptionSetName
+                        IsGlobal = false,
+                        OptionSetType = OptionSetType.Picklist,
+                        Name = SchemaName + "_local",
+                        Options = {
+                                new OptionMetadata( new Label("-", _languageCode), null),
+                        }
                     }
                 };
 
@@ -128,8 +131,11 @@ namespace PowerApps.ImporterClassMaster
                     IsValidForGrid = true,
                     OptionSet = new OptionSetMetadata
                     {
-                        IsGlobal = true,
-                        Name = OptionSetName
+                        IsGlobal = false,
+                        Name = SchemaName + "_local",
+                        Options = {
+                                new OptionMetadata( new Label("-", _languageCode), null),
+                        }
                     }
                 };
                 addedAttributes.Add(CreatedPicklistAttributeMetadata);
@@ -234,7 +240,7 @@ namespace PowerApps.ImporterClassMaster
                     createFieldString("PlaceofDeath", "Place of Death", StringFormat.Text, ref addedAttributes);
                     createFieldString("DeceasedLastState", "Deceased Last State", StringFormat.Text, ref addedAttributes);
                     createFieldDate("DateofBirth", "Date of Birth", ref addedAttributes, DateTimeFormat.DateOnly);
-                    // @todo Category picklist
+                    createFieldPicklist("Category", "Category", ref addedAttributes);
                     createFieldString("DeceasedLastZip", "Deceased Last Zip", StringFormat.Text, ref addedAttributes);
                     createFieldString("DeceasedFirstName", "Deceased First Name", StringFormat.Text, ref addedAttributes);
                     createFieldString("County", "County", StringFormat.Text, ref addedAttributes);
@@ -242,19 +248,19 @@ namespace PowerApps.ImporterClassMaster
                     createFieldString("NumberofSon", "Number of Son", StringFormat.Text, ref addedAttributes);
                     createFieldString("DeceasedLastName", "Deceased Last Name", StringFormat.Text, ref addedAttributes);
                     createFieldString("NumberofDaughter", "Number of Daughter", StringFormat.Text, ref addedAttributes);
-                    // @todo Sales Stage picklist
-                    // @todo Status picklist
+                    createFieldPicklist("SalesStage", "Sales Stage", ref addedAttributes);
+                    createFieldPicklist("Status", "Status", ref addedAttributes);
                     createFieldString("MainContactNumber", "Main Contact Number", StringFormat.Phone, ref addedAttributes);
-                    // @todo Property Status picklist
+                    createFieldPicklist("PropertyStatus", "Property Status", ref addedAttributes);
                     createFieldString("MainContactPerson", "Main Contact Person", StringFormat.Text, ref addedAttributes);
-                    // @todo Relationship picklist
+                    createFieldPicklist("Relationship", "Relationship", ref addedAttributes);
                     createFieldString("MainContactAddress", "Main Contact Address", StringFormat.Text, ref addedAttributes);
                     createFieldString("MainContactCity", "Main Contact City", StringFormat.Text, ref addedAttributes);
                     createFieldString("MainContactState", "Main Contact State", StringFormat.Text, ref addedAttributes);
                     createFieldString("MainContactZipcode", "Main Contact Zipcode", StringFormat.Text, ref addedAttributes);
                     createFieldString("LeadNumber", "Lead Number", StringFormat.Text, ref addedAttributes);
                     createFieldString("DeceasedFullName", "Deceased Full Name", StringFormat.Text, ref addedAttributes);
-                    // @todo Assigned To
+                    createFieldPicklist("AssignedTo", "Assigned To", ref addedAttributes);
                     createFieldString("MainContactPhone_1", "Main Contact Phone 1", StringFormat.Phone, ref addedAttributes);
                     createFieldString("MainContactPhone_2", "Main Contact Phone 2", StringFormat.Phone, ref addedAttributes);
                     createFieldDate("UploadedDate", "Uploaded Date", ref addedAttributes, DateTimeFormat.DateOnly);
@@ -263,7 +269,7 @@ namespace PowerApps.ImporterClassMaster
                     createFieldString("LoanToValue", "Loan To Value", StringFormat.Text, ref addedAttributes);
                     createFieldString("LoanToValue_percent", "Loan To Value(%)", StringFormat.Text, ref addedAttributes);
                     createFieldString("RPRLoan1Amount", "RPR Loan 1 Amount", StringFormat.Text, ref addedAttributes, "money");
-                    // @todo Need Genealogy Search
+                    createFieldPicklist("NeedGenealogySearch", "Need Genealogy Search?", ref addedAttributes);
                     createFieldString("Notefortheteam", "Note for the team", StringFormat.Text, ref addedAttributes, "multi");
                     createFieldString("OutstandingLoan2", "Outstanding Loan 2", StringFormat.Text, ref addedAttributes, "money");
                     createFieldDate("RecordedLoan1Date", "Recorded Loan 1 Date", ref addedAttributes, DateTimeFormat.DateOnly);
@@ -285,16 +291,16 @@ namespace PowerApps.ImporterClassMaster
                     createFieldString("OutstandingLoan3", "Outstanding Loan 3", StringFormat.Text, ref addedAttributes, "money");
                     createFieldString("LendersName3", "Lender's Name 3", StringFormat.Text, ref addedAttributes);
                     createFieldDate("RecordedLoan3Date", "Recorded Loan 3 Date", ref addedAttributes, DateTimeFormat.DateOnly);
-                    // @todo Great Spread?
-                    // @todo Interested?
+                    createFieldPicklist("GreatSpread", "Great Spread?", ref addedAttributes);
+                    createFieldPicklist("Interested", "Interested?", ref addedAttributes);
                     createFieldDate("DateforGenealogyInfosurplus", "Date Requested for Additional Genealogy Info", ref addedAttributes, DateTimeFormat.DateOnly);
                     createFieldDate("DateforGenealogyInfo", "Date Requested for Genealogy Info", ref addedAttributes, DateTimeFormat.DateOnly);
-                    // @todo Picklist Researcher
+                    createFieldPicklist("Researcher", "Researcher", ref addedAttributes);
                     createFieldString("Equity", "Equity", StringFormat.Text, ref addedAttributes, "money");
                     createFieldString("Equitys", "Equitys", StringFormat.Text, ref addedAttributes, "money");
                     createFieldDate("GenealogySearchDone", "Genealogy Search Done", ref addedAttributes, DateTimeFormat.DateOnly);
-                    // @todo Additional Genealogy Search Source
-                    // @todo Genealogy Search Sources
+                    createFieldPicklist("AdditionalGenealogySearchSource", "Additional Genealogy Search Source", ref addedAttributes);
+                    createFieldPicklist("GenealogySearchSources", "Genealogy Search Sources", ref addedAttributes);
                     createFieldDate("AuctionDate", "Auction Date", ref addedAttributes, DateTimeFormat.DateOnly);
                     createFieldString("BrokerName", "Broker Name", StringFormat.Text, ref addedAttributes);
                     createFieldDate("SentReferralsAgreement", "Sent Referrals Agreement", ref addedAttributes, DateTimeFormat.DateOnly);
